@@ -3,7 +3,7 @@
 
 # Python Repo Template
 # ..................................
-# Copyright (c) 2017-2018, Kendrick Walls
+# Copyright (c) 2017-2020, Kendrick Walls
 # ..................................
 # Licensed under MIT (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,15 +25,17 @@ except Exception:
 	raise ImportError("""Not Implemented.""")
 
 
-def readFile(filename="""./README.md"""):
+def readFile(filename):
+	"""Helper Function to read files"""
 	theResult = None
-	try:
-		with open(str("""./{}""").format(str(filename))) as f:
-			theResult = f.read()
-	except Exception:
-		theResult = str(
-			"""See https://github.com/reactive-firewall/python-repo/{}"""
-		).format(filename)
+	if filename in ("""README.md""", """LICENSE.md"""):
+		try:
+			with open(str("""./{}""").format(str(filename))) as file:
+				theResult = file.read()
+		except Exception:
+			theResult = str(
+				"""See https://github.com/reactive-firewall/python-repo/{}"""
+			).format(filename)
 	return theResult
 
 
@@ -44,17 +46,17 @@ except Exception:
 	requirements = None
 
 readme = readFile("""README.md""")
-license = readFile("""LICENSE.md""")
+SLA = readFile("""LICENSE.md""")
 
 setup(
 	name="""pythonrepo""",
-	version="""1.1.0""",
+	version="""1.1.4""",
 	description="""Python Repo""",
 	long_description=readme,
 	install_requires=requirements,
 	author="""reactive-firewall""",
 	author_email="""reactive-firewall@users.noreply.github.com""",
 	url="""https://github.com/reactive-firewall/python-repo.git""",
-	license=license,
+	license=SLA,
 	packages=find_packages(exclude=("""tests""", """docs""")),
 )

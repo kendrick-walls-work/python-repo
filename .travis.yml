@@ -1,5 +1,4 @@
 language: python
-sudo: false
 
 python:
 
@@ -14,7 +13,7 @@ addons:
       description: Python Repo Template
     # Commands to prepare for build_command
     # ** likely specific to your build **
-    build_command_prepend: make clean ;
+    build_command_prepend: make clean
     # The command that will be added as an argument to "cov-build" to compile your project for analysis,
     # ** likely specific to your build **
     build_command: make test
@@ -39,101 +38,109 @@ matrix:
   - os: linux
     python:  "3.2"
     env: TRAVIS_PYTHON_VERSION="3.2"
+    dist: trusty
   - os: linux
     python:  "3.3"
     env: TRAVIS_PYTHON_VERSION="3.3"
+    dist: trusty
   - os: linux
     python:  "3.4"
+    dist: xenial
     env: TRAVIS_PYTHON_VERSION="3.4"
   - os: linux
     python:  "3.5"
     env: TRAVIS_PYTHON_VERSION="3.5"
     dist: trusty
   - os: linux
+    python:  "3.5"
+    env: TRAVIS_PYTHON_VERSION="3.5"
+    dist: xenial
+  - os: linux
     python:  "3.6"
     env: TRAVIS_PYTHON_VERSION="3.6"
   - os: linux
     python:  "3.5-dev" # 3.5 development branch
     env: TRAVIS_PYTHON_VERSION="3.5"
+    dist: xenial
   - os: linux
     python:  "3.6-dev"
     env: TRAVIS_PYTHON_VERSION="3.6"
+    dist: bionic
   - os: linux
     python:  "3.7-dev"
     env: TRAVIS_PYTHON_VERSION="3.7"
+    dist: bionic
+  - os: linux
+    python:  "3.7"
+    env: TRAVIS_PYTHON_VERSION="3.7"
+    dist: bionic
   - os: linux
     python:  "3.8-dev"
     env: TRAVIS_PYTHON_VERSION="3.8"
+    dist: bionic
+  - os: linux
+    python:  "3.9-dev"
+    env: TRAVIS_PYTHON_VERSION="3.9"
+    dist: bionic
   - os: linux
     python:  "pypy2.7-5.8.0"
+    dist: xenial
   - os: linux
     python:  "pypy3.5-5.8.0"
+    dist: xenial
   - os: linux
     python:  "pypy3.5-6.0"
+    dist: xenial
   - os: linux
     python:  "pypy3.5-5.10.0"
     env: TRAVIS_PYTHON_VERSION="3.5"
+    dist: xenial
   - os: linux
     python:  "pypy2.7-5.10.0"
     env: TRAVIS_PYTHON_VERSION="2.7"
+    dist: xenial
   - os: linux
-    python:  "nightly" # currently points to 3.7-dev
-    env: TRAVIS_PYTHON_VERSION="3.7-dev"
-  - os: osx
-    osx_image: xcode7.2
-    language: generic
-  - os: osx
-    osx_image: xcode7.3
-    language: generic
-  - os: osx
-    osx_image: xcode8
-    language: generic
-  - os: osx
-    osx_image: xcode8.3
-    language: generic
-  - os: osx
-    osx_image: xcode9
-    language: generic
-  - os: osx
-    osx_image: xcode9.2
-    language: generic
-  - os: osx
-    osx_image: xcode9.3
-    language: generic
-  - os: osx
-    osx_image: xcode9.4
-    language: generic
+    python:  "nightly" # currently points to 3.9-dev
+    env: TRAVIS_PYTHON_VERSION="3.9-dev"
   - os: osx
     osx_image: xcode10
-    language: generic
+    language: shell
+  - os: osx
+    osx_image: xcode11.1
+    language: shell
+  - os: osx
+    osx_image: xcode11.2
+    language: shell
+  - os: osx
+    osx_image: xcode11.3
+    language: shell
   allow_failures:
   - os: linux
-    python:  "nightly" # currently points to 3.7-dev
-    env: TRAVIS_PYTHON_VERSION="3.7-dev"
-  - os: osx
-    osx_image: xcode6.4
-    language: generic
-  - os: osx
-    osx_image: xcode7.2
-    language: generic
-  - os: osx
-    osx_image: xcode7.3
-    language: generic
+    dist: xenial
+  - os: linux
+    dist: trusty
+  - os: linux
+    python:  "3.9-dev"
   - os: linux
     python:  "2.6"
   - os: linux
     python:  "3.2"
-    env: TRAVIS_PYTHON_VERSION="3.2"
+  - os: linux
+    python:  "3.3"
+  - os: linux
+    python:  "3.4"
+    dist: xenial
+  - os: linux
+    python:  "3.4"
+    dist: bionic
   - os: linux
     python:  "3.7-dev"
-    env: TRAVIS_PYTHON_VERSION="3.7"
   - os: linux
     python:  "3.8-dev"
-    env: TRAVIS_PYTHON_VERSION="3.8"
+  - os: linux
+    python:  "3.9-dev"
   - os: linux
     python:  "nightly"
-  - os: linux
-    python:  "3.2"
   - os: linux
     python: "pypy"
   - os: linux
@@ -144,15 +151,50 @@ matrix:
     python:  "pypy2.7-5.8.0"
   - os: linux
     python:  "pypy3.5-5.10.0"
-    env: TRAVIS_PYTHON_VERSION="3.5"
   - os: linux
     python:  "pypy2.7-5.10.0"
-    env: TRAVIS_PYTHON_VERSION="2.7"
   - os: linux
     python:  "pypy3.5-6.0"
-  - os: linux
-    python:  "nightly" # currently points to 3.7-dev
-    env: TRAVIS_PYTHON_VERSION="3.7-dev"
+  - os: osx
+    osx_image: xcode6.4
+    language: shell
+  - os: osx
+    osx_image: xcode7.2
+    language: shell
+  - os: osx
+    osx_image: xcode7.3
+    language: shell
+  - os: osx
+    osx_image: xcode8
+    language: shell
+  - os: osx
+    osx_image: xcode8.3
+    language: shell
+  - os: osx
+    osx_image: xcode9
+    language: shell
+  - os: osx
+    osx_image: xcode9.2
+    language: shell
+  - os: osx
+    osx_image: xcode9.3
+    language: shell
+  - os: osx
+    osx_image: xcode9.4
+    language: shell
+  - os: osx
+    osx_image: xcode10
+    language: shell
+  - os: osx
+    osx_image: xcode10.1
+    language: shell
+  - os: osx
+    osx_image: xcode11
+    language: shell
+  - os: osx
+    osx_image: xcode11.1
+    language: shell
+
 
 install:  "make init"
 
@@ -182,18 +224,17 @@ before_install:
   - if [ $TRAVIS_OS_NAME == osx ] ; then brew install coverage $INSTALL || true ; fi
   - if [ $TRAVIS_OS_NAME == osx ] ; then brew install codecov || true ; fi
   - if [ $TRAVIS_OS_NAME == osx ] ; then brew install pip || true ; fi
-  - if [ $TRAVIS_OS_NAME == osx ] ; then export VERSIONER_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION:-3.6} || true ; fi
+  - if [ $TRAVIS_OS_NAME == osx ] ; then export VERSIONER_PYTHON_VERSION=${TRAVIS_PYTHON_VERSION:-3.7} || true ; fi
   - if [ $TRAVIS_OS_NAME == osx ] ; then defaults write com.apple.versioner.python Version $TRAVIS_PYTHON_VERSION || true ; fi
   - travis_retry pip install tox || pip install tox || true ;
   - travis_retry pip install coverage || true ;
   - travis_retry pip install codecov || true ;
   - travis_retry python -m pip install coverage || python -m pip install coverage || true ;
   - travis_retry python -m pip install codecov || python -m pip install codecov || true ;
-  - travis_retry python3 -m pip install tox || python3 -m pip install tox || true ;
-  - travis_retry python3 -m pip install coverage || python3 -m pip install coverage || true ;
-  - travis_retry python3 -m pip install codecov || python3 -m pip install codecov || true ;
-  - travis_retry python3 -m pip install -r requirements.txt || python3 -m pip install -r requirements.txt || true ;
-  - echo -n | openssl s_client -connect https://scan.coverity.com:443 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' 2>/dev/null | sudo tee -a /etc/ssl/certs/ca- || true ;
+  - travis_retry python3 -m pip3 install tox || python3 -m pip install tox || true ;
+  - travis_retry python3 -m pip3 install coverage || python3 -m pip install coverage || true ;
+  - travis_retry python3 -m pip3 install codecov || python3 -m pip install codecov || true ;
+  - travis_retry python3 -m pip3 install -r requirements.txt || python3 -m pip install -r requirements.txt || true ;
 
 # The following is used to get coveralls working: add affter codecov
 #  - travis_retry pip install python-coveralls 2>/dev/null || python3 -m pip install python-coveralls || true ;
@@ -205,6 +246,7 @@ before_script:
   - if [ $TRAVIS_OS_NAME == osx ] ; then echo "SKIP code climate" ; else curl -L --url https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 -o ./cc-test-reporter 3>/dev/null 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_OS_NAME == osx ] ; then echo "SKIP code climate" ; else chmod +x ./cc-test-reporter || true ; fi ;
   - if [ $TRAVIS_OS_NAME == osx ] ; then echo "SKIP code climate" ; else ./cc-test-reporter before-build || true ; fi ;
+  - if [ $TRAVIS_OS_NAME == osx ] ; then echo "SKIP deepsource" ; else (curl https://deepsource.io/cli | sh) || true ; fi ;
 
 script:
   - make clean ;
@@ -220,6 +262,7 @@ after_failure:
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP coverage" ; else coverage combine 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP coverage xml" ; else coverage xml 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP codecov" ; else codecov 2>/dev/null || true ; fi ;
+  - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP deepsource" ; else ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_OS_NAME == osx ] || [ $TRAVIS_PYTHON_VERSION == "3.2" ] || [ $TRAVIS_PYTHON_VERSION == "3.3" ] ; then echo "SKIP code climate" ; else ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT || true ; fi ;
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] || [ $TRAVIS_PYTHON_VERSION == "3.3" ] ; then echo "SKIP codecov" ; else codecov 2>/dev/null || true ; fi ;
   - make clean 2>/dev/null || true
@@ -228,6 +271,7 @@ after_success:
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP coverage" ; else coverage combine 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP coverage xml" ; else coverage xml 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_OS_NAME == osx ] || [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP code climate" ; else ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT || true ; fi ;
+  - if [ $TRAVIS_OS_NAME == osx ] || [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP deepsource" ; else ./bin/deepsource report --analyzer test-coverage --key python --value-file ./coverage.xml 2>/dev/null || true ; fi ;
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP codecov" ; else codecov || true ; fi ;
   - travis_retry python3 -m pip install python-coveralls || python3 -m pip install python-coveralls || true ;
   - if [ $TRAVIS_PYTHON_VERSION == "3.2" ] ; then echo "SKIP codecov" ; else coveralls 2>/dev/null || true ; fi ;
