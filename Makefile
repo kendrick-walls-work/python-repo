@@ -2,7 +2,7 @@
 
 # Python Repo Template
 # ..................................
-# Copyright (c) 2017-2018, Kendrick Walls
+# Copyright (c) 2017-2024, Kendrick Walls
 # ..................................
 # Licensed under MIT (the "License");
 # you may not use this file except in compliance with the License.
@@ -59,18 +59,28 @@ PHONY: must_be_root cleanup
 
 build:
 	$(QUIET)$(ECHO) "No need to build. Try make -f Makefile install"
+	$(QUIET)$(MAKE) -s -C ./docs/ -f Makefile text 2>/dev/null || true
 
 init:
 	$(QUIET)$(ECHO) "$@: Done."
 
 install: must_be_root
-	$(QUIET)python3 -m pip install "git+https://github.com/reactive-firewall/pythonrepo.git#egg=pythonrepo"
+	$(QUIET)python3 -m pip install "git+https://github.com/reactive-firewall/python-repo.git#egg=pythonrepo"
+	$(QUITE)$(WAIT)
+	$(QUIET)$(ECHO) "$@: Done."
+
+user-install:
+	$(QUIET)python3 -m pip install --user "git+https://github.com/reactive-firewall/python-repo.git#egg=pythonrepo"
 	$(QUITE)$(WAIT)
 	$(QUIET)$(ECHO) "$@: Done."
 
 uninstall:
-	$(QUITE)$(QUIET)python3 -m pip uninstall pythonrepo || true
+	$(QUITE)python3 -m pip uninstall pythonrepo || true
 	$(QUITE)$(WAIT)
+	$(QUIET)$(ECHO) "$@: Done."
+
+test-reports:
+	$(QUIET)mkdir test-reports 2>/dev/null >/dev/null || true ;
 	$(QUIET)$(ECHO) "$@: Done."
 
 purge: clean uninstall
@@ -80,12 +90,16 @@ purge: clean uninstall
 test: cleanup
 	$(QUIET)coverage run -p --source=pythonrepo -m unittest discover --verbose -s ./tests -t ./ || python3 -m unittest discover --verbose -s ./tests -t ./ || python -m unittest discover --verbose -s ./tests -t ./ || DO_FAIL=exit 2 ;
 	$(QUIET)coverage combine 2>/dev/null || true
-	$(QUIET)coverage report --include=pythonrepo* 2>/dev/null || true
+	$(QUIET)coverage report -m --include=pythonrepo* 2>/dev/null || true
 	$(QUIET)$(DO_FAIL);
 	$(QUIET)$(ECHO) "$@: Done."
 
 test-tox: cleanup
 	$(QUIET)tox -v -- || tail -n 500 .tox/py*/log/py*.log 2>/dev/null
+	$(QUIET)$(ECHO) "$@: Done."
+
+test-pytest: cleanup test-reports
+	$(QUIET)python3 -m pytest --junitxml=test-reports/junit.xml -v tests || python -m pytest --junitxml=test-reports/junit.xml -v tests
 	$(QUIET)$(ECHO) "$@: Done."
 
 test-style: cleanup
@@ -105,6 +119,8 @@ cleanup:
 	$(QUIET)rm -f pythonrepo/*/*.pyc 2>/dev/null || true
 	$(QUIET)rm -f pythonrepo/*/*~ 2>/dev/null || true
 	$(QUIET)rm -f *.DS_Store 2>/dev/null || true
+	$(QUIET)rm -Rf .pytest_cache/ 2>/dev/null || true
+	$(QUIET)rmdir ./test-reports/ 2>/dev/null || true
 	$(QUIET)rm -f pythonrepo/*.DS_Store 2>/dev/null || true
 	$(QUIET)rm -f pythonrepo/*/*.DS_Store 2>/dev/null || true
 	$(QUIET)rm -f pythonrepo.egg-info/* 2>/dev/null || true
@@ -119,6 +135,7 @@ cleanup:
 	$(QUIET)rm -Rf ./.tox/ 2>/dev/null || true
 
 clean: cleanup
+	$(QUIET)rm -f test-results/junit.xml 2>/dev/null || true
 	$(QUIET)$(MAKE) -s -C ./docs/ -f Makefile clean 2>/dev/null || true
 	$(QUIET)$(ECHO) "$@: Done."
 
